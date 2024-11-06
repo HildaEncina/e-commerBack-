@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
+const {carritoSchema} = require('./carrito')
 
-
-const usuarioShema = mongoose.Schema({
+const usuarioSchema = new mongoose.Schema({
     nombre: {
         type: String,
         required: [true, 'Por favor proporciona el nombre.'],
@@ -44,11 +44,10 @@ const usuarioShema = mongoose.Schema({
     avatar:{
         type: String
     },
-
-    carrito: [CarritoSchema]
+    carrito: [carritoSchema]
 },
 {timestamps: true});
 
-const Usuario = mongoose.model('usuario', usuarioShema); 
+const Usuario = mongoose.model('usuario', usuarioSchema); 
 
 module.exports = Usuario; 
