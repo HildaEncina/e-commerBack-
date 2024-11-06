@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
 
 
-
-const productoShema = mongoose.Schema({
+const productoSchema = new mongoose.Schema({
     marca: {
         type: String,
         required: [true, 'Por favor proporciona la marca del producto.'],
@@ -36,6 +35,6 @@ const productoShema = mongoose.Schema({
 },
 {timestamps: true});
 
-const Producto = mongoose.model('usuario', productoShema); 
+const Producto = mongoose.model('usuario', productoSchema); 
 
 module.exports = Producto; 
