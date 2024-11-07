@@ -39,12 +39,15 @@ const usuarioSchema = new mongoose.Schema({
     rol:{
         type: String,
         required: [true],
+        default: 'cliente'
 
     }, 
     avatar:{
-        type: String
+        type: String,
+      
     },
-    carrito: [carritoSchema]
+    carrito: carritoSchema,
+   
 },
 {timestamps: true});
 
