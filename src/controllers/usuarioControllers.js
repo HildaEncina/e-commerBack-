@@ -13,7 +13,7 @@ module.exports.agregarUsuario = (req, res) => {
                 nombre: nuevoUsuario.nombre,
                 apellido: nuevoUsuario.apellido,
                 edad: nuevoUsuario.edad,
-                email: nuevoUsuario.correo, 
+                email: nuevoUsuario.email, 
                 telefono: nuevoUsuario.telefono,
                 domicilio: nuevoUsuario.ciudad,
                 rol: nuevoUsuario.rol,
@@ -51,13 +51,26 @@ module.exports.usuarios = (req, res) => {
 }; 
 
 
-
+/** Devuelve un usuario por ID */
+module.exports.usuarioID = (req, res) => {
+    Usuario.findOne({_id : req.params._id})
+       .then((usuarioEncontrado) =>{
+           if(!usuarioEncontrado){
+             res.statusMessage = 'Usuario no encontrado.'; 
+             return res.status(404).json({mensaje: 'Usuario no encontrado.'})
+           }
+           return res.status(200).json(usuarioEncontrado);
+       })
+       .catch((error) => {
+           return res.status(400).json({message: error.message}); 
+       });
+};
        
 
 /**Editar usuario */
 module.exports.actualizarUsuario = (req, res) => {
      const camposParaActualizar = {}; 
-     const {nombre, apellido, edad, correo, contrasena, telefono, ciudad, rol, estiloDeVida } = req.body; 
+     const {nombre, apellido, edad, email, clave, telefono, domicilio} = req.body; 
 
      if(nombre) {
         camposParaActualizar.nombre = nombre; 
@@ -71,31 +84,23 @@ module.exports.actualizarUsuario = (req, res) => {
         camposParaActualizar.edad = edad; 
      }
 
-     if(correo){
-        camposParaActualizar.correo = correo;
+     if(email){
+        camposParaActualizar.email = email;
      }
      
-     if(contrasena) {
-        camposParaActualizar.contrasena = contrasena; 
+     if(clave) {
+        camposParaActualizar.clave = clave; 
      }
 
      if(telefono){
          camposParaActualizar.telefono = telefono ; 
      }
 
-     if(ciudad) {
-        camposParaActualizar.ciudad = ciudad; 
-     }
-
-     if(rol) {
-        camposParaActualizar.rol = rol;
-     }
-
-     if(estiloDeVida) {
-        camposParaActualizar.estiloDeVida= estiloDeVida; 
+     if(domicilio) {
+        camposParaActualizar.domicilio = domicilio; 
      }
     
-     Usuario.findOneAndUpdate({correo: req.infoUsuario.correo}, camposParaActualizar, {new: true})
+     Usuario.findOneAndUpdate({email: req.infoUsuario.email}, camposParaActualizar, {new: true})
         .then((usuarioActualizado) => {
             return res.status(200).json(usuarioActualizado);
         })
@@ -121,6 +126,7 @@ module.exports.actualizarUsuario = (req, res) => {
             res.status(400).json({ mensaje: 'Error al actualizar el usuario', error });
         });
 };
+
 
 /**Eliminar Usuario */
 module.exports.removerUsuario = (req, res) => {
@@ -153,7 +159,7 @@ module.exports.login= (req, res) => {
            const infoEnToken = {
              nombre: usuarioEncontrado.nombre, 
              apellido: usuarioEncontrado.apellido, 
-             correo: usuarioEncontrado.correo, 
+             email: usuarioEncontrado.email, 
              rol:usuarioEncontrado.rol
            }
 
