@@ -2,7 +2,7 @@
 const express = require('express');
 const routerUsuario = express.Router();
 const UsuarioController = require('../controllers/usuarioControllers');
-const validarToken= require('./../middlewares/validarToken'); 
+const validarToken= require('../middlewares/validarToken'); 
 
 /**Login y registro */
 routerUsuario.post('/login', UsuarioController.login); 

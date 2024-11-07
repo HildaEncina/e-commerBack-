@@ -3,13 +3,17 @@ const {productoSchema} = require('./producto');
 
 
 const carritoSchema = new mongoose.Schema({
-    idProducto: {
-        type: String,
-       
-    },
     idUsuario:{
         type: String,
        
+    },
+    cantidadProductos:{
+        type:Number,
+        default: 0
+    },
+    montoTotal:{
+        type:Number,
+        default: 0
     },
     productos: [productoSchema]
    
