@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt'); // Asegúrate de importar bcrypt
 
-const {carritoSchema} = require('./carrito')
+const { carritoSchema } = require('./carrito');
 
 const usuarioSchema = new mongoose.Schema({
     nombre: {
@@ -8,46 +9,62 @@ const usuarioSchema = new mongoose.Schema({
         required: [true, 'Por favor proporciona el nombre.'],
         minLength: [3, 'Por favor proporciona un nombre real.']
     },
-    apellido:{
+    apellido: {
         type: String,
         required: [true, 'Por favor proporcione su apellido'],
-        minLength: [3, 'Por favor proporciona un apellido mas largo']
+        minLength: [3, 'Por favor proporciona un apellido más largo']
     },
-    edad:{
+    edad: {
         type: Number,
-        required: [true, 'Por favor proporciona la edad.'],
+        required: [true, 'Por favor proporciona la edad.']
     },
-    email:{
+    email: {
         type: String,
         required: [true, 'Por favor proporcione su correo.'],
+        unique: true, // Los correos electrónicos deben ser únicos
         minLength: [4, 'Por favor proporciona un correo real']
     },
-    clave:{
+    password: {
         type: String,
-        required: [true, 'Por favor proporcione su contrasena'],
-        minLength: [3, 'Por favor proporciona una contraseña mas segura']
+        required: [true, 'Por favor proporcione su contraseña'],
+        minLength: [3, 'Por favor proporciona una contraseña más segura']
     },
-    telefono:{
+    telefono: {
         type: Number,
-        minLength: [9, 'Por favor proporciona un numero de telefono real']
+        minLength: [9, 'Por favor proporciona un número de teléfono real']
     },
-    domicilio:{
+    domicilio: {
         type: String,
-        required: [true, 'Por favor proporciona el nombre.'],
+        required: [true, 'Por favor proporciona tu domicilio.'],
         minLength: [5, 'Por favor proporciona una ubicación real.']
-    }, 
-    rol:{
+    },
+    rol: {
         type: String,
         required: [true],
-
-    }, 
-    avatar:{
+        default: 'cliente'
+    },
+    avatar: {
         type: String
     },
-    carrito: [carritoSchema]
-},
-{timestamps: true});
+    carrito: carritoSchema
+}, 
+{ timestamps: true });
 
-const Usuario = mongoose.model('usuario', usuarioSchema); 
+// **Middleware para cifrar contraseñas antes de guardar**
+usuarioSchema.pre('save', async function (next) {
+   
+    if (!this.isModified('password')) return next();
 
-module.exports = Usuario; 
+    try {
+        const salt = await bcrypt.genSalt(10);
+        this.password = await bcrypt.hash(this.password, salt);
+        next(); 
+    } catch (error) {
+        next(error);
+    }
+});
+
+// Crear y exportar el modelo
+const Usuario = mongoose.model('Usuario', usuarioSchema);
+
+module.exports = Usuario;

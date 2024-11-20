@@ -29,12 +29,13 @@ const productoSchema = new mongoose.Schema({
     },
     foto:{
         type: String,
+     
         
     },
    
 },
 {timestamps: true});
 
-const Producto = mongoose.model('usuario', productoSchema); 
+const Producto = mongoose.model('producto', productoSchema); 
 
-module.exports = Producto; 
+module.exports = { Producto, productoSchema }; 
