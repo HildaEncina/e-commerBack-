@@ -10,9 +10,10 @@ const validarToken = (req, res, next) => {
         }
         
         req.infoUsuario = {
+            id: decodificado._id,
             nombre: decodificado.nombre,
             apellido: decodificado.apellido,
-            correo: decodificado.correo,
+            email: decodificado.correo,
             rol: decodificado.rol
         }
 
