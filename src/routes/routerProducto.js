@@ -9,4 +9,6 @@ routerProducto.delete('/eliminar/:id', productoController.eliminarProducto);
 routerProducto.get('/listar', productoController.listarProductos); 
 routerProducto.get('/:id', productoController.productoID); 
 routerProducto.put('/editar/:id', productoController.editarProducto); 
-module.exports = router;
+
+
+module.exports= routerProducto;

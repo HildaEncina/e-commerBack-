@@ -79,6 +79,5 @@ module.exports.eliminarProducto = (req, res) => {
     });
 };
 
-module.exports = productosControllers;
 
 

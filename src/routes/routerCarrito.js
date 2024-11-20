@@ -9,3 +9,5 @@ routerCarrito.delete('/eliminar/:id', carritoController.eliminarCarrito);
 routerCarrito.get('/listar', carritoController.listarCarritos); 
 routerCarrito.get('/:id', carritoController.carritoID); 
 routerCarrito.put('/editar/:id', carritoController.editarCarritoID); 
+
+module.exports= routerCarrito;
