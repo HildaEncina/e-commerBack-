@@ -1,4 +1,7 @@
+
 const Carrito = require('../models/carrito');
+
+/**Aca creamos a un carrito */
 
 module.exports.crearCarrito = (req, res) => {
     Carrito.create(req.body)
@@ -11,6 +14,8 @@ module.exports.crearCarrito = (req, res) => {
         return res.status(400).json({message: error.message});
     });
  };
+
+
 
  module.exports.listarCarritos = (req, res) => {
     Carrito.find()
@@ -37,6 +42,7 @@ module.exports.carritoID = (req, res) => {
        });
 };
 
+
 module.exports.editarCarritoID = (req, res) => {
     const camposParaActualizar= {}; 
     const {cantidadProductos, montoTotal} = req.body;
@@ -58,6 +64,8 @@ module.exports.editarCarritoID = (req, res) => {
             return res.status(400).json({message: error.message});
         });
 };
+
+
 
 
 module.exports.eliminarCarrito = (req, res) => {
