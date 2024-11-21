@@ -59,10 +59,9 @@ module.exports.usuarioID = (req, res) => {
 };
 
 /**Editar usuario */
-module.exports.actualizarUsuario = (req, res) => {
-  const camposParaActualizar = {};
-  const { nombre, apellido, edad, email, clave, telefono, domicilio } =
-    req.body;
+module.exports.editarPerfil = (req, res) => {
+     const camposParaActualizar = {}; 
+     const {nombre, apellido, edad, password, telefono, domicilio, foto} = req.body; 
 
   if (nombre) {
     camposParaActualizar.nombre = nombre;
@@ -72,46 +71,41 @@ module.exports.actualizarUsuario = (req, res) => {
     camposParaActualizar.apellido = apellido;
   }
 
-  if (edad) {
-    camposParaActualizar.edad = edad;
-  }
-
-  if (email) {
-    camposParaActualizar.email = email;
-  }
-
-  if (clave) {
-    camposParaActualizar.clave = clave;
-  }
+     if(edad){
+        camposParaActualizar.edad = edad; 
+     }
+     
+     if(password) {
+        camposParaActualizar.password = password; 
+     }
 
   if (telefono) {
     camposParaActualizar.telefono = telefono;
   }
 
-  if (domicilio) {
-    camposParaActualizar.domicilio = domicilio;
-  }
+     if(domicilio) {
+        camposParaActualizar.domicilio = domicilio; 
+     }
+     if(foto){
+        camposParaActualizar.foto = foto; 
+     }
+    
+     Usuario.findOneAndUpdate({email: req.infoUsuario.email}, camposParaActualizar, {new: true})
+        .then((usuarioActualizado) => {
+            return res.status(200).json(usuarioActualizado);
+        })
+        .catch((error) => {
+            return res.status(400).json(error);
+        });
 
-  Usuario.findOneAndUpdate(
-    { email: req.infoUsuario.email },
-    camposParaActualizar,
-    { new: true }
-  )
-    .then((usuarioActualizado) => {
-      return res.status(200).json(usuarioActualizado);
-    })
-    .catch((error) => {
-      return res.status(400).json(error);
-    });
-};
+}
 
-module.exports.actualizarUsuario = (req, res) => {
-  const { id } = req.params;
-  const { avatar, carrito } = req.body;
+module.exports.agregarCarrito = (req, res) => {
+    const { id } = req.params; 
+    const {carrito } = req.body;  
 
-  const updateData = {};
-  if (avatar) updateData.avatar = avatar;
-  if (carrito) updateData.carrito = carrito;
+    const updateData = {};
+    if (carrito) updateData.carrito = carrito;
 
   Usuario.findByIdAndUpdate(id, updateData, { new: true })
     .then((usuarioActualizado) => {
@@ -123,6 +117,8 @@ module.exports.actualizarUsuario = (req, res) => {
         .json({ mensaje: "Error al actualizar el usuario", error });
     });
 };
+
+
 
 /**Eliminar Usuario */
 module.exports.removerUsuario = (req, res) => {
