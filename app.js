@@ -11,8 +11,6 @@ const PORT = 8082;
 const routerUsuario = require('./src/routes/routerUsuario');
 const routerProducto = require('./src/routes/routerProducto');
 const routerCarrito =require('./src/routes/routerCarrito')
-const routerUsuario = require('./src/routes/routerUsuario');
-const routerCarrito = require('./src/routes/routerCarrito');
 
 
 
@@ -26,7 +24,6 @@ app.use(cors());
 
 app.use('/api/usuario', routerUsuario); 
 app.use('/api/producto', routerProducto);
-app.use('/api/carrito', routerCarrito);
 app.use('/api/carrito', routerCarrito);
 
 

@@ -5,10 +5,10 @@ const productoController = require('../controllers/productoControllers');
 
 
 routerProducto.post('/crear', productoController.crearProducto); 
-routerProducto.delete('/eliminar/:id', productoController.eliminarProducto); 
+routerProducto.delete('/eliminar/:_id', productoController.eliminarProducto); 
 routerProducto.get('/listar', productoController.listarProductos); 
-routerProducto.get('/:id', productoController.productoID); 
-routerProducto.put('/editar/:id', productoController.editarProducto); 
+routerProducto.get('/:_id', productoController.productoID); 
+routerProducto.put('/editar/:_id', productoController.editarProducto); 
 
 
 module.exports= routerProducto;
