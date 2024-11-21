@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
-const bcrypt = require('bcrypt'); // Asegúrate de importar bcrypt
-
+const bcrypt = require('bcrypt');
 const { carritoSchema } = require('./carrito');
 
 const usuarioSchema = new mongoose.Schema({
@@ -21,7 +20,7 @@ const usuarioSchema = new mongoose.Schema({
     email: {
         type: String,
         required: [true, 'Por favor proporcione su correo.'],
-        unique: true, // Los correos electrónicos deben ser únicos
+        unique: true, 
         minLength: [4, 'Por favor proporciona un correo real']
     },
     password: {
@@ -43,7 +42,7 @@ const usuarioSchema = new mongoose.Schema({
         required: [true],
         default: 'cliente'
     },
-    avatar: {
+    foto: {
         type: String
     },
     carrito: carritoSchema

@@ -10,9 +10,10 @@ routerUsuario.post('/registrar', UsuarioController.agregarUsuario);
 
 /** RUtas validadas con token */
 
-routerUsuario.delete('/elimiarUsuario/:correo', validarToken, UsuarioController.removerUsuario); 
-routerUsuario.put('/actualizar/:correo', validarToken, UsuarioController.actualizarUsuario);
+routerUsuario.delete('/eliminarUsuario/:correo', validarToken, UsuarioController.removerUsuario); 
+routerUsuario.put('/editarPerfil/:correo', validarToken, UsuarioController.editarPerfil);
 routerUsuario.get('/', validarToken, UsuarioController.usuarios); 
+routerUsuario.get('/:_id', UsuarioController.usuarioID);
 
 
 
