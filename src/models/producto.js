@@ -24,7 +24,7 @@ const productoSchema = new mongoose.Schema({
     },
     precio: {
         type: Number,
-        required: [true, 'Por favor proporcione el precio del producto.'],
+        
     },
     fotos: { 
         type: [String],
