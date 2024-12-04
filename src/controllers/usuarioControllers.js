@@ -58,47 +58,60 @@ module.exports.usuarioID = (req, res) => {
     });
 };
 
-/**Editar usuario */
+/** Editar usuario */
 module.exports.editarPerfil = (req, res) => {
-     const camposParaActualizar = {}; 
-     const {nombre, apellido, edad, password, telefono, domicilio, foto} = req.body; 
+  console.log("Esto es del editar", req.body);
+
+  const camposParaActualizar = {};
+  const { nombre, apellido, edad, password, telefono, domicilio, foto, email } = req.body; 
+
+  // Validar que el email esté presente
+  if (!email) {
+      return res.status(400).json({ mensaje: 'El email es obligatorio para la actualización.' });
+  }
 
   if (nombre) {
-    camposParaActualizar.nombre = nombre;
+      camposParaActualizar.nombre = nombre;
   }
 
   if (apellido) {
-    camposParaActualizar.apellido = apellido;
+      camposParaActualizar.apellido = apellido;
   }
 
-     if(edad){
-        camposParaActualizar.edad = edad; 
-     }
-     
-     if(password) {
-        camposParaActualizar.password = password; 
-     }
+  if (edad) {
+      camposParaActualizar.edad = edad; 
+  }
+
+  if (password) {
+      camposParaActualizar.password = password; 
+  }
 
   if (telefono) {
-    camposParaActualizar.telefono = telefono;
+      camposParaActualizar.telefono = telefono;
   }
 
-     if(domicilio) {
-        camposParaActualizar.domicilio = domicilio; 
-     }
-     if(foto){
-        camposParaActualizar.foto = foto; 
-     }
-    
-     Usuario.findOneAndUpdate({email: req.infoUsuario.email}, camposParaActualizar, {new: true})
-        .then((usuarioActualizado) => {
-            return res.status(200).json(usuarioActualizado);
-        })
-        .catch((error) => {
-            return res.status(400).json(error);
-        });
+  if (domicilio) {
+      camposParaActualizar.domicilio = domicilio; 
+  }
 
-}
+  if (foto) {
+      camposParaActualizar.foto = foto; 
+  }
+
+  // Actualizar el usuario utilizando el email del cuerpo de la solicitud
+  Usuario.findOneAndUpdate({ email: email }, camposParaActualizar, { new: true })
+      .then((usuarioActualizado) => {
+          if (!usuarioActualizado) {
+              return res.status(404).json({ mensaje: 'Usuario no encontrado.' });
+          }
+          return res.status(200).json(usuarioActualizado);
+      })
+      .catch((error) => {
+          console.error("Error al actualizar el usuario:", error);
+          return res.status(400).json({ mensaje: 'Error al actualizar el usuario', error });
+      });
+};
+
 
 module.exports.agregarCarrito = (req, res) => {
     const { id } = req.params; 

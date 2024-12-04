@@ -100,4 +100,12 @@ module.exports.eliminarCarrito = (req, res) => {
 };
 
 
+// module.exports.eliminarProductoCarrito = (req, res) => {
+//     const carritoId = req.params.idCarrito;
+//     const productoId= req.params.idProducto; 
+//     Carrito.findOne({_id : carritoId})
+//     .then((carritoEncontrado) =>{
+//         if(!carritoEncontrado){
+//         }
+// }
 
