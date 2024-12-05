@@ -37,8 +37,10 @@ module.exports.productoID = (req, res) => {
 };
 
 module.exports.editarProducto = (req, res) => {
+ 
   const camposParaActualizar = {};
-  const { marca, tipo, descripcion, cosecha, precio } = req.body;
+  const { marca, tipo, descripcion, cosecha, precio, fotos } = req.body;
+  console.log("Soy foto de edit", fotos)
 
   if (marca) {
     camposParaActualizar.marca = marca;
@@ -57,6 +59,9 @@ module.exports.editarProducto = (req, res) => {
   if (precio) {
     camposParaActualizar.precio = precio;
   }
+  if (fotos) {
+    camposParaActualizar.fotos = fotos;
+  }
 
   Producto.findOneAndUpdate({ _id: req.params._id }, camposParaActualizar, {
     new: true,
@@ -68,6 +73,8 @@ module.exports.editarProducto = (req, res) => {
       return res.status(400).json({ message: error.message });
     });
 };
+
+
 
 module.exports.eliminarProducto = (req, res) => {
     Producto.findOneAndDelete({_id: req.params._id})

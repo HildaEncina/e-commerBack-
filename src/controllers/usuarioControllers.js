@@ -60,7 +60,7 @@ module.exports.usuarioID = (req, res) => {
 
 /** Editar usuario */
 module.exports.editarPerfil = (req, res) => {
-  console.log("Esto es del editar", req.body);
+ 
 
   const camposParaActualizar = {};
   const { nombre, apellido, edad, password, telefono, domicilio, foto, email } = req.body; 
