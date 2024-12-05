@@ -14,7 +14,7 @@ routerUsuario.delete('/eliminarUsuario/:id', UsuarioController.eliminarUsuario);
 routerUsuario.put('/editarPerfil/:correo', UsuarioController.editarPerfil);
 routerUsuario.get('/', validarToken, UsuarioController.usuarios); 
 routerUsuario.get('/:_id', UsuarioController.usuarioID);
-
+routerUsuario.post("/favoritos/:_id", UsuarioController.agregarAFavoritos);
 
 
 module.exports = routerUsuario; 

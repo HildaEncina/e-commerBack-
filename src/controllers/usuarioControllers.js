@@ -175,3 +175,33 @@ module.exports.login = async (req, res) => {
       .json({ mensaje: "Error interno del servidor", error });
   }
 };
+
+/**Agregamos un favorito */
+
+module.exports.agregarAFavoritos = async (req, res) => {
+  console.log("soy el req", req.params._id)
+  const { producto } = req.body;
+ const productoId=  producto._id; 
+
+  try {
+    const usuario = await Usuario.findById( req.params._id);
+    console.log("Usuario encontrado ", usuario)
+    const productos = usuario.productos;
+    if (!usuario) {
+      return res.status(404).json({ mensaje: "Usuario no encontrado" });
+    }
+    
+    const productoEncontrado = productos.find(producto => producto._id.toString() === productoId.toString());
+
+    if(!productoEncontrado){ 
+       usuario.productos.push(producto);
+
+  
+    await usuario.save(); }
+
+    return res.status(200).json({ mensaje: "Producto agregado a favoritos", usuario});
+  } catch (error) {
+    console.error("Error al agregar producto a favoritos:", error);
+    return res.status(500).json({ mensaje: "Error interno del servidor", error });
+  }
+};

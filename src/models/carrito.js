@@ -13,7 +13,7 @@ const carritoSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    productos: [productoSchema], /** Crear un metodo que busque a esta lista, busque al producto, y lo elimine */
+    productos: [productoSchema], 
 }, { timestamps: true });
 
 const Carrito = mongoose.model('Carrito', carritoSchema);

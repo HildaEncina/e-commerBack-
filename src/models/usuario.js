@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const { carritoSchema } = require('./carrito');
+const { productoSchema } = require('./producto');
 
 const usuarioSchema = new mongoose.Schema({
     nombre: {
@@ -45,7 +46,8 @@ const usuarioSchema = new mongoose.Schema({
     foto: {
         type: String
     },
-    carrito: carritoSchema
+    carrito: carritoSchema,
+    productos: [productoSchema], 
 }, 
 { timestamps: true });
 
