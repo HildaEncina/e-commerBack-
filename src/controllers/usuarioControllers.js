@@ -132,17 +132,17 @@ module.exports.agregarCarrito = (req, res) => {
 };
 
 
-
-/**Eliminar Usuario */
-module.exports.removerUsuario = (req, res) => {
-  Usuario.findOneAndDelete({ correo: req.infoUsuario.correo })
+module.exports.eliminarUsuario = (req, res) => {
+  const userId = req.params.id; 
+  Usuario.findByIdAndDelete(userId) 
     .then(() => {
-      return res.status(204).end();
+      return res.status(202).json({ message: "Se eliminó exitosamente" });
     })
     .catch((error) => {
-      return res.status(400).json(error);
+      return res.status(400).json({ message: error.message });
     });
 };
+
 
 /**Login */
 
