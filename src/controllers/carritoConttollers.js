@@ -99,13 +99,46 @@ module.exports.eliminarCarrito = (req, res) => {
     });
 };
 
+module.exports.eliminarProductoCarrito = async (req, res) => {
+    const { _id: idProducto } = req.body; 
+    const idCarrito = req.params._id; 
+    try {
+      
+      const carrito = await Carrito.findById(idCarrito);
+      if (!carrito) {
+        return res.status(404).json({ mensaje: "Carrito no encontrado" });
+      }
+  
+    
+      const productoEncontrado = carrito.productos.find(
+        (producto) => producto._id.toString() === idProducto.toString()
+      );
+  
+      if (!productoEncontrado) {
+        return res.status(404).json({ mensaje: "Producto no encontrado en el carrito" });
+      }
+  
+      
+      carrito.productos = carrito.productos.filter(
+        (producto) => producto._id.toString() !== idProducto.toString()
+      );
+  
+     
+      carrito.cantidadProductos -= 1;
+      carrito.montoTotal -= productoEncontrado.precio * (productoEncontrado.cantidad || 1);
+  
+     
+      await carrito.save();
+  
+      return res.status(200).json({ mensaje: "Producto eliminado correctamente", carrito });
+    } catch (error) {
+      console.error("Error al eliminar el producto:", error);
+      return res.status(500).json({ mensaje: "Error interno del servidor", error });
+    }
+  };
 
-// module.exports.eliminarProductoCarrito = (req, res) => {
-//     const carritoId = req.params.idCarrito;
-//     const productoId= req.params.idProducto; 
-//     Carrito.findOne({_id : carritoId})
-//     .then((carritoEncontrado) =>{
-//         if(!carritoEncontrado){
-//         }
-// }
+
+
+
+
 
