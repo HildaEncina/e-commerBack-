@@ -44,7 +44,7 @@ module.exports.carritoID = (req, res) => {
 
 
 module.exports.editarCarritoID = async (req, res) => {
-  // Suponiendo que el producto a agregar se envía en el cuerpo
+ 
     const carritoId = req.params.id;
     console.log("Datos recibidos Ahora:", req.body);
     console.log("ID del carrito:", req.params.id);
@@ -61,14 +61,14 @@ module.exports.editarCarritoID = async (req, res) => {
    }
    console.log("SOy producto", producto)
     try {
-        // Obtener el carrito actual
+      
         const carrito = await Carrito.findById(carritoId);
         if (!carrito) {
             return res.status(404).json({ message: 'Carrito no encontrado' });
         }
 
-        // Agregar el nuevo producto al array de productos
-        carrito.productos.push(producto); // Añadir el nuevo producto
+      
+        carrito.productos.push(producto); 
         carrito.cantidadProductos += 1;
         
         const precioFinal= precio;
@@ -77,7 +77,7 @@ module.exports.editarCarritoID = async (req, res) => {
 
         carrito.montoTotal += precioFinal; 
       
-        // Guardar los cambios
+     
         const carritoEditado = await carrito.save();
 
         return res.status(200).json(carritoEditado);
@@ -100,12 +100,41 @@ module.exports.eliminarCarrito = (req, res) => {
 };
 
 
-// module.exports.eliminarProductoCarrito = (req, res) => {
-//     const carritoId = req.params.idCarrito;
-//     const productoId= req.params.idProducto; 
-//     Carrito.findOne({_id : carritoId})
-//     .then((carritoEncontrado) =>{
-//         if(!carritoEncontrado){
-//         }
-// }
-
+module.exports.eliminarProductoCarrito = async (req, res) => {
+    const { _id: idProducto } = req.body; 
+    const idCarrito = req.params._id; 
+    try {
+      
+      const carrito = await Carrito.findById(idCarrito);
+      if (!carrito) {
+        return res.status(404).json({ mensaje: "Carrito no encontrado" });
+      }
+  
+    
+      const productoEncontrado = carrito.productos.find(
+        (producto) => producto._id.toString() === idProducto.toString()
+      );
+  
+      if (!productoEncontrado) {
+        return res.status(404).json({ mensaje: "Producto no encontrado en el carrito" });
+      }
+  
+      
+      carrito.productos = carrito.productos.filter(
+        (producto) => producto._id.toString() !== idProducto.toString()
+      );
+  
+     
+      carrito.cantidadProductos -= 1;
+      carrito.montoTotal -= productoEncontrado.precio * (productoEncontrado.cantidad || 1);
+  
+     
+      await carrito.save();
+  
+      return res.status(200).json({ mensaje: "Producto eliminado correctamente", carrito });
+    } catch (error) {
+      console.error("Error al eliminar el producto:", error);
+      return res.status(500).json({ mensaje: "Error interno del servidor", error });
+    }
+  };
+  
