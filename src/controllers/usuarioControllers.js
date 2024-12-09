@@ -35,11 +35,11 @@ module.exports.agregarUsuario = (req, res) => {
 /**Listar Usuarios */
 module.exports.usuarios = (req, res) => {
   console.log(req.infoUsuario);
-  Usuario.find();
-  then((listaUsuarios) => {
-    return res.stauts(200).json(listaUsuarios);
+  Usuario.find()
+  .then((listaUsuarios) => {
+    return res.status(200).json(listaUsuarios);
   }).catch((error) => {
-    return res.status(400).json(error);
+    return res.status(400).json({message: error.message});
   });
 };
 

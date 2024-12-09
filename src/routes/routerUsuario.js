@@ -12,7 +12,7 @@ routerUsuario.post('/registrar', UsuarioController.agregarUsuario);
 
 routerUsuario.delete('/eliminarUsuario/:id', UsuarioController.eliminarUsuario); 
 routerUsuario.put('/editarPerfil/:correo', UsuarioController.editarPerfil);
-routerUsuario.get('/', validarToken, UsuarioController.usuarios); 
+routerUsuario.get('/', UsuarioController.usuarios); 
 routerUsuario.get('/:_id', UsuarioController.usuarioID);
 routerUsuario.post("/favoritos/:_id", UsuarioController.agregarAFavoritos);
 
