@@ -3,7 +3,7 @@
 </div>
 
 
-# 🥂 Vinoteca Front-End- Plataforma de Comercio Electrónico de Bebidas Alcohólicas 
+# 🥂 Vinoteca Back-End- Plataforma de Comercio Electrónico de Bebidas Alcohólicas 
 
 ---
 ¡Bienvenido al proyecto Pilar Wines! Este sistema es una solución integral para la gestión de una vinoteca, abarcando funcionalidades tanto para el cliente final como para el administrador.
