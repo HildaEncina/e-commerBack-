@@ -1,5 +1,7 @@
+require('dotenv').config();
+
 const jwt = require('jsonwebtoken'); 
-const clave = 'vinoteca'; 
+const clave = process.env.CLAVE;
 
 const validarToken = (req, res, next) => {
     const token_usuario = req.headers.token_usuario; 
